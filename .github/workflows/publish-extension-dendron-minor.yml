@@ -67,7 +67,7 @@ jobs:
           yarn build:minor:remote:ci
 
       - name: Upload VSIX Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: vsix
           path: ${{ env.VSIX_RELATIVE_PATH }}
