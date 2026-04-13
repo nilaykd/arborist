@@ -196,12 +196,24 @@ export async function _activate(
     }
   }
 
-  try {
-    // Setup the workspace trust callback to detect changes from the user's
-    // workspace trust settings
+  // Register initWS before workspace detection — must work without an existing workspace
+  const existingCmds = await vscode.commands.getCommands();
+  if (!existingCmds.includes(DENDRON_COMMANDS.INIT_WS.key)) {
+    context.subscriptions.push(
+      vscode.commands.registerCommand(
+        DENDRON_COMMANDS.INIT_WS.key,
+        async () => {
+          const { SetupWorkspaceCommand } = await import(
+            "./commands/SetupWorkspace"
+          );
+          const cmd = new SetupWorkspaceCommand();
+          await cmd.run();
+        }
+      )
+    );
+  }
 
-    // This version check is a temporary, one-release patch to try to unblock
-    // users who are on old versions of VS Code.
+  try {
     vscode.workspace.onDidGrantWorkspaceTrust(() => {
       getExtension().getEngine().trustedWorkspace = vscode.workspace.isTrusted;
     });
