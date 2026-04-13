@@ -348,9 +348,7 @@ export function processSidebar(
 
   return sidebarResult
     .andThen((sidebar) => Result.combine(sidebar.map(safeProcessItem)))
-    .map((x: any) =>
-      (x as SidebarConfig[][]).flat()
-    ) as unknown as SidebarResult<Sidebar>;
+    .map((x: any) => (x as SidebarConfig[][]).flat()) as unknown as SidebarResult<Sidebar>;
 }
 
 export function parseSidebarConfig(

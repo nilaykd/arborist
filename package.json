@@ -168,8 +168,7 @@
     "tough-cookie": "^4.1.4",
     "nanoid": "3.3.7",
     "open": "^8.4.2",
-    "@types/express-serve-static-core": "4.17.35",
-    "dompurify": "^2.4.9"
+    "@types/express-serve-static-core": "4.17.35"
   },
   "overrides": {
     "trim": "0.0.3",

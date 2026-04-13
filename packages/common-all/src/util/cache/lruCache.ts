@@ -3,8 +3,7 @@ import { Cache } from "./cache";
 import { DendronError } from "../../error";
 
 // Compatible with lru-cache v6 (default export is constructor) and v10 (named export LRUCache)
-const LRU: any =
-  (LRUModule as any).default || (LRUModule as any).LRUCache || LRUModule;
+const LRU: any = (LRUModule as any).default || (LRUModule as any).LRUCache || LRUModule;
 
 export type LruCacheOpts = {
   /** Max number of items to keep in cache. */
