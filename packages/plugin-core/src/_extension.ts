@@ -91,6 +91,18 @@ export function activate(
   vscode.languages.setLanguageConfiguration("markdown", {
     wordPattern: MARKDOWN_WORD_PATTERN,
   });
+
+  // Register initWS synchronously so it's always available, even without a workspace
+  context.subscriptions.push(
+    vscode.commands.registerCommand(DENDRON_COMMANDS.INIT_WS.key, async () => {
+      const { SetupWorkspaceCommand } = await import(
+        "./commands/SetupWorkspace"
+      );
+      const cmd = new SetupWorkspaceCommand();
+      await cmd.run();
+    })
+  );
+
   if (stage !== "test") {
     _activate(context).catch((err) => {
       Logger.error({
@@ -194,23 +206,6 @@ export async function _activate(
         SegmentClient.instance().anonymousId
       );
     }
-  }
-
-  // Register initWS before workspace detection — must work without an existing workspace
-  const existingCmds = await vscode.commands.getCommands();
-  if (!existingCmds.includes(DENDRON_COMMANDS.INIT_WS.key)) {
-    context.subscriptions.push(
-      vscode.commands.registerCommand(
-        DENDRON_COMMANDS.INIT_WS.key,
-        async () => {
-          const { SetupWorkspaceCommand } = await import(
-            "./commands/SetupWorkspace"
-          );
-          const cmd = new SetupWorkspaceCommand();
-          await cmd.run();
-        }
-      )
-    );
   }
 
   try {
