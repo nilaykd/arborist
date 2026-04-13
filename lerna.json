@@ -1,17 +1,22 @@
 {
   "packages": [
-    "packages/*",
-    "bootstrap/scripts"
+    "packages/common-all",
+    "packages/common-assets",
+    "packages/common-server",
+    "packages/common-test-utils",
+    "packages/dendron-viz",
+    "packages/engine-server",
+    "packages/api-server",
+    "packages/engine-test-utils",
+    "packages/pods-core",
+    "packages/dendron-cli",
+    "packages/nextjs-template",
+    "packages/plugin-core",
+    "packages/common-frontend",
+    "packages/dendron-plugin-views",
+    "packages/unified",
+    "packages/dendron-design-system"
   ],
   "npmClient": "yarn",
-  "useWorkspaces": true,
-  "command": {
-    "version": {
-      "conventionalCommits": true,
-      "message": "chore(release): publish",
-      "changelogPreset": "@dendronhq/conventional-changelog-dendron",
-      "yes": true
-    }
-  },
   "version": "0.124.0"
 }

@@ -6,7 +6,9 @@
     "nohoist": [
       "webpack",
       "webpack/**",
-      "@types/**"
+      "@types/**",
+      "lru-cache",
+      "lru-cache/**"
     ]
   },
   "dependencies": {
@@ -85,6 +87,7 @@
     "typescript": "~5.4.0",
     "url-loader": "4.1.1",
     "web-vitals": "^1.0.1",
+    "lru-cache": "^6.0.0",
     "webpack": "^4.47.0",
     "webpack-dev-server": "3.11.1",
     "webpack-manifest-plugin": "2.2.0",

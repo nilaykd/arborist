@@ -43,7 +43,7 @@
     "execa": "^5.0.0",
     "husky": "^4.2.5",
     "jest": "^28.1.0",
-    "lerna": "^3.19.0",
+    "lerna": "^8.1.0",
     "lint-staged": "^15.2.0",
     "lodash": "^4.17.15",
     "madge": "^5.0.1",
@@ -152,13 +152,39 @@
     "d3-color": "3.1.0",
     "ajv-formats/ajv": "^8.6.0",
     "vscode-uri": "3.0.3",
-    "mermaid": "9.1.7"
+    "mermaid": "9.1.7",
+    "cheerio": "1.0.0",
+        "underscore": "^1.13.8",
+    "form-data": "^4.0.1",
+    "handlebars": "^4.7.9",
+    "ejs": "^3.1.10",
+    "loader-utils": "^2.0.4",
+    "immer": "^9.0.21",
+    "axios": "^1.7.9",
+    "semver": "^7.6.3",
+    "json5": "^2.2.3",
+    "word-wrap": "^1.2.5",
+    "tough-cookie": "^4.1.4",
+    "nanoid": "3.3.7"
   },
   "overrides": {
     "trim": "0.0.3",
     "d3-color": "3.1.0",
     "ajv-formats": {
       "ajv": "^8.6.0"
-    }
+    },
+    "cheerio": "1.0.0",
+        "underscore": "^1.13.8",
+    "form-data": "^4.0.1",
+    "handlebars": "^4.7.9",
+    "ejs": "^3.1.10",
+    "loader-utils": "^2.0.4",
+    "immer": "^9.0.21",
+    "axios": "^1.7.9",
+    "semver": "^7.6.3",
+    "json5": "^2.2.3",
+    "word-wrap": "^1.2.5",
+    "tough-cookie": "^4.1.4",
+    "nanoid": "3.3.7"
   }
 }

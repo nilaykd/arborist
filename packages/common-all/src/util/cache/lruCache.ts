@@ -1,6 +1,10 @@
-import LRU from "lru-cache";
+import * as LRUModule from "lru-cache";
 import { Cache } from "./cache";
 import { DendronError } from "../../error";
+
+// Compatible with lru-cache v6 (default export is constructor) and v10 (named export LRUCache)
+const LRU: any =
+  (LRUModule as any).default || (LRUModule as any).LRUCache || LRUModule;
 
 export type LruCacheOpts = {
   /** Max number of items to keep in cache. */
@@ -12,7 +16,7 @@ export type LruCacheOpts = {
  *  items, when cache max items is reached.
  *  (get methods count toward recently used order) */
 export class LruCache<K, T> implements Cache<K, T> {
-  private cache: LRU<K, T>;
+  private cache: any;
 
   constructor(opts: LruCacheOpts) {
     if (opts.maxItems <= 0) {
@@ -21,7 +25,7 @@ export class LruCache<K, T> implements Cache<K, T> {
       });
     }
 
-    this.cache = new LRU<K, T>({
+    this.cache = new LRU({
       max: opts.maxItems,
     });
   }
@@ -35,6 +39,11 @@ export class LruCache<K, T> implements Cache<K, T> {
   }
 
   drop(key: K): void {
-    this.cache.del(key);
+    // v6 uses .del(), v10 uses .delete()
+    if (this.cache.delete) {
+      this.cache.delete(key);
+    } else {
+      this.cache.del(key);
+    }
   }
 }
