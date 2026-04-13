@@ -92,17 +92,6 @@ export function activate(
     wordPattern: MARKDOWN_WORD_PATTERN,
   });
 
-  // Register initWS synchronously so it's always available, even without a workspace
-  context.subscriptions.push(
-    vscode.commands.registerCommand(DENDRON_COMMANDS.INIT_WS.key, async () => {
-      const { SetupWorkspaceCommand } = await import(
-        "./commands/SetupWorkspace"
-      );
-      const cmd = new SetupWorkspaceCommand();
-      await cmd.run();
-    })
-  );
-
   if (stage !== "test") {
     _activate(context).catch((err) => {
       Logger.error({
