@@ -1,6 +1,6 @@
 .vscode/**
 .vscode-test/**
-out/**/*.map
+out/**
 src/**
 .gitignore
 vsc-extension-quickstart.md
@@ -13,8 +13,9 @@ build
 scripts/**
 fixtures/**
 dist/extension.jsbak
+dist/server.js
 tmp
 CHANGELOG.md
 *.log
 *.old
-assets
+webpack.*.js
