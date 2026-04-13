@@ -180,7 +180,9 @@ suite("CREATE_MISSING_LINKED_NOTES", function () {
           quickPickStub
             .onCall(0)
             .returns(
-              Promise.resolve("cancelled") as Thenable<vscode.QuickPickItem>
+              Promise.resolve(
+                "cancelled"
+              ) as unknown as Thenable<vscode.QuickPickItem>
             );
           await cmd.run();
           const vaultPath = vault2Path({ vault, wsRoot });
@@ -231,7 +233,9 @@ suite("CREATE_MISSING_LINKED_NOTES", function () {
           quickPickStub
             .onCall(0)
             .returns(
-              Promise.resolve("proceed") as Thenable<vscode.QuickPickItem>
+              Promise.resolve(
+                "proceed"
+              ) as unknown as Thenable<vscode.QuickPickItem>
             );
           await cmd.run();
           const vaultPath = vault2Path({ vault, wsRoot });
@@ -285,7 +289,9 @@ suite("CREATE_MISSING_LINKED_NOTES", function () {
           quickPickStub
             .onCall(0)
             .returns(
-              Promise.resolve("proceed") as Thenable<vscode.QuickPickItem>
+              Promise.resolve(
+                "proceed"
+              ) as unknown as Thenable<vscode.QuickPickItem>
             );
           await cmd.run();
           const sVaultPath = vault2Path({ vault: vault1, wsRoot });
@@ -350,7 +356,9 @@ suite("CREATE_MISSING_LINKED_NOTES", function () {
           quickPickStub
             .onCall(0)
             .returns(
-              Promise.resolve("proceed") as Thenable<vscode.QuickPickItem>
+              Promise.resolve(
+                "proceed"
+              ) as unknown as Thenable<vscode.QuickPickItem>
             );
           await cmd.run();
           const firstVaultPath = vault2Path({ vault: vault1, wsRoot });
@@ -437,7 +445,9 @@ suite("CREATE_MISSING_LINKED_NOTES", function () {
           quickPickStub
             .onCall(0)
             .returns(
-              Promise.resolve("proceed") as Thenable<vscode.QuickPickItem>
+              Promise.resolve(
+                "proceed"
+              ) as unknown as Thenable<vscode.QuickPickItem>
             );
           await cmd.run();
           const firstVaultPath = vault2Path({ vault: vault1, wsRoot });
@@ -509,7 +519,9 @@ suite("REGENERATE_NOTE_ID", function () {
           quickPickStub
             .onCall(0)
             .returns(
-              Promise.resolve("proceed") as Thenable<vscode.QuickPickItem>
+              Promise.resolve(
+                "proceed"
+              ) as unknown as Thenable<vscode.QuickPickItem>
             );
           await cmd.run();
           const note = (await engine.findNotesMeta({ fname: "foo", vault }))[0];
@@ -564,7 +576,9 @@ suite("REGENERATE_NOTE_ID", function () {
           quickPickStub
             .onCall(0)
             .returns(
-              Promise.resolve("proceed") as Thenable<vscode.QuickPickItem>
+              Promise.resolve(
+                "proceed"
+              ) as unknown as Thenable<vscode.QuickPickItem>
             );
           await cmd.run();
           const root = (
@@ -615,7 +629,9 @@ suite("REGENERATE_NOTE_ID", function () {
           quickPickStub
             .onCall(0)
             .returns(
-              Promise.resolve("proceed") as Thenable<vscode.QuickPickItem>
+              Promise.resolve(
+                "proceed"
+              ) as unknown as Thenable<vscode.QuickPickItem>
             );
           await cmd.run();
           const note = (await engine.findNotesMeta({ fname: "foo", vault }))[0];
@@ -786,7 +802,9 @@ suite("FIX_INVALID_FILENAMES", function () {
             quickPickStub
               .onCall(0)
               .returns(
-                Promise.resolve("proceed") as Thenable<vscode.QuickPickItem>
+                Promise.resolve(
+                  "proceed"
+                ) as unknown as Thenable<vscode.QuickPickItem>
               );
             await cmd.run();
             const getNoteResp2 = await engine.getNote("bar..'(foo,)'");
