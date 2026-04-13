@@ -9,6 +9,7 @@ import { ITelemetryClient } from "../telemetry/common/ITelemetryClient";
 import { NativeTreeView } from "../views/common/treeview/NativeTreeView";
 import { CopyNoteURLCmd } from "./commands/CopyNoteURLCmd";
 import { NoteLookupCmd } from "./commands/NoteLookupCmd";
+import { SetupWorkspaceCmd } from "./commands/SetupWorkspaceCmd";
 import { TogglePreviewCmd } from "./commands/TogglePreviewCmd";
 import { setupWebExtContainer } from "./injection-providers/setupWebExtContainer";
 
@@ -17,6 +18,12 @@ import { setupWebExtContainer } from "./injection-providers/setupWebExtContainer
  * @param context
  */
 export async function activate(context: vscode.ExtensionContext) {
+  // Register initWS early — it must work even without an existing workspace
+  const setupCmd = new SetupWorkspaceCmd();
+  context.subscriptions.push(
+    vscode.commands.registerCommand(SetupWorkspaceCmd.key, () => setupCmd.run())
+  );
+
   try {
     // Use the web extension injection container:
     await setupWebExtContainer(context);
@@ -27,15 +34,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
     reportActivationTelemetry();
   } catch (error) {
-    // TODO: properly detect if we're in a Dendron workspace or not (instead of
-    // relying on getWSRoot throwing).
-    vscode.window.showErrorMessage(
-      `Something went wrong during initialization.`
-    );
+    // No existing workspace — initWS is still available for the user
   }
 
   vscode.commands.executeCommand("setContext", "dendron:pluginActive", true);
-  vscode.window.showInformationMessage("Dendron is active");
 }
 
 export function deactivate() {}
