@@ -83,7 +83,7 @@
     "vscode-uri": "3.0.3"
   },
   "devDependencies": {
-    "@prisma/client": "^4.1.1",
+    "@prisma/client": "^5.22.0",
     "@types/execa": "^2.0.0",
     "@types/fs-extra": "^9.0.1",
     "@types/klaw": "^3.0.1",
@@ -99,7 +99,7 @@
     "@types/unist": "^2.0.3",
     "coveralls": "^3.0.2",
     "cross-env": "^7.0.2",
-    "prisma": "^4.1.1",
+    "prisma": "^5.22.0",
     "rimraf": "^2.6.2",
     "ts-node": "^8.10.2",
     "tslint": "^5.11.0",
