@@ -1,11 +1,9 @@
 import * as vscode from "vscode";
 
-// Register initWS at module level — before ANY local imports that could fail.
-// This runs the moment the module is evaluated by VS Code's extension host.
 let _initWSRegistered = false;
 
 export function activate(context: vscode.ExtensionContext) {
-  // Absolute first thing: register initWS
+  // Register initWS before anything else
   if (!_initWSRegistered) {
     _initWSRegistered = true;
     context.subscriptions.push(
@@ -15,8 +13,6 @@ export function activate(context: vscode.ExtensionContext) {
           const cmd = new mod.SetupWorkspaceCommand();
           await cmd.run();
         } catch (err: any) {
-          // If desktop SetupWorkspace fails (e.g. missing Node deps in web),
-          // fall back to the web-compatible version
           try {
             const webMod = require("./web/commands/SetupWorkspaceCmd");
             const cmd = new webMod.SetupWorkspaceCmd();
@@ -31,15 +27,21 @@ export function activate(context: vscode.ExtensionContext) {
     );
   }
 
-  // Now load the rest of the extension
+  // Load the rest of the extension — show errors instead of hiding them
   try {
     const { Logger } = require("./logger");
     Logger.configure(context, "debug");
     require("./_extension").activate(context);
     const { DWorkspace } = require("./workspacev2");
     return { DWorkspace, Logger };
-  } catch (err) {
-    // Extension failed to load — initWS is still available
+  } catch (err: any) {
+    const msg = err?.message || String(err);
+    vscode.window.showErrorMessage(`Arborist Notes activation error: ${msg}`);
+    // Create an output channel for detailed error info
+    const channel = vscode.window.createOutputChannel("Arborist Notes");
+    channel.appendLine("=== Activation Error ===");
+    channel.appendLine(err?.stack || msg);
+    channel.show();
     return {};
   }
 }

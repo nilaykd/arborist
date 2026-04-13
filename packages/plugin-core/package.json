@@ -1,10 +1,10 @@
 {
-  "name": "arborist-notes",
+  "name": "@dendronhq/plugin-core",
   "private": true,
   "displayName": "Arborist Notes",
   "description": "Arborist — a hierarchical note-taking tool that grows as you do. Community fork of Dendron.",
   "publisher": "nilaykd",
-  "version": "0.132.1",
+  "version": "0.133.0",
   "engines": {
     "vscode": "^1.85.0"
   },
