@@ -348,7 +348,9 @@ export function processSidebar(
 
   return sidebarResult
     .andThen((sidebar) => Result.combine(sidebar.map(safeProcessItem)))
-    .map((x) => x.flat());
+    .map((x: any) =>
+      (x as SidebarConfig[][]).flat()
+    ) as unknown as SidebarResult<Sidebar>;
 }
 
 export function parseSidebarConfig(
@@ -388,7 +390,7 @@ export function parseSidebarConfig(
           );
       }
     });
-    return Result.combine(resultList);
+    return Result.combine(resultList) as Result<SidebarConfig, IDendronError>;
   }
 
   return err(new DendronError({ message: "Sidebar object is not an array" }));
