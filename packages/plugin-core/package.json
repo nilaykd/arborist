@@ -4,7 +4,7 @@
   "displayName": "Arborist Notes",
   "description": "Arborist — a hierarchical note-taking tool that grows as you do. Community fork of Dendron.",
   "publisher": "nilaykd",
-  "version": "0.127.0",
+  "version": "0.128.0",
   "engines": {
     "vscode": "^1.85.0"
   },
