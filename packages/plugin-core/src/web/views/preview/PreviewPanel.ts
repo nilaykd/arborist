@@ -233,7 +233,7 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
             ? await this.wsUtils.getNoteFromDocument(activeTextEditor?.document)
             : undefined;
 
-          if (!_.isUndefined(maybeNote)) {
+          if (maybeNote && maybeNote.length > 0 && maybeNote[0]) {
             this.sendRefreshMessage(this._panel!, maybeNote[0], true);
           }
           break;

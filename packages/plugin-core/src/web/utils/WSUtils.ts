@@ -55,7 +55,8 @@ export class WSUtilsWeb {
 
     const notes = await this.getNoteFromDocument(editor.document);
 
-    if (!notes || notes.length !== 1) {
+    // Accept first note when matching (handles duplicates gracefully)
+    if (!notes || notes.length === 0) {
       return undefined;
     }
 
