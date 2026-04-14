@@ -64,6 +64,26 @@ const config = {
         { from: "webpack-require-hack.js", to: "webpack-require-hack.js" },
         { from: "sqlite3-binding.js", to: "sqlite3-binding.js" },
         {
+          from: path.join(
+            "..",
+            "engine-server",
+            "src",
+            "drivers",
+            "prisma-shim.js"
+          ),
+          to: "prisma-shim.js",
+        },
+        {
+          from: path.join(
+            "..",
+            "engine-server",
+            "src",
+            "drivers",
+            "adm-zip.js"
+          ),
+          to: "adm-zip.js",
+        },
+        {
           from: path.join("lib", "binding", "*", "node_sqlite3.node"),
           to: "node_sqlite3.node",
           noErrorOnMissing: true,
