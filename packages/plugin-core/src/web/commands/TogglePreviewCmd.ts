@@ -43,10 +43,11 @@ export class TogglePreviewCmd {
 
     const note = await this.wsUtils.getActiveNote();
 
-    await this._panel.show();
+    // Pass note directly — show() handles panel creation and caches note
+    // for use when the webview becomes ready
+    await this._panel.show(note);
 
     if (note) {
-      await this._panel.show(note);
       return { note };
       // } else if (opts?.fsPath) {
       //   const fsPath = opts.fsPath;

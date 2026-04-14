@@ -67,6 +67,12 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
    * Dendron note).
    */
   async show(note?: NoteProps): Promise<void> {
+    // Cache the note so MESSAGE_DISPATCHER_READY can use it even if
+    // activeTextEditor changes (e.g. when closing the preview tab)
+    if (note) {
+      this.initWithNote = note;
+    }
+
     if (this._panel) {
       if (!this.isVisible()) {
         this._panel.reveal();
@@ -121,6 +127,7 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
         }
 
         this._panel = undefined;
+        this.initWithNote = undefined;
         this.unlock();
       });
 
@@ -192,6 +199,8 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
           let note: NoteProps | undefined;
           if (this.initWithNote !== undefined) {
             note = this.initWithNote;
+            // Clear after use — subsequent renders use activeTextEditor
+            this.initWithNote = undefined;
             this.logger.debug({
               ctx,
               msg: "got pre-set note",
