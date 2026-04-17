@@ -4,7 +4,7 @@
   "displayName": "Arborist",
   "description": "Maintained fork of the Dendron hierarchical notes extension, modernized for current VS Code and Node versions. Same on-disk format as Dendron; zero critical CVEs in dependencies. Independent maintenance \u2014 not affiliated with the original Dendron project.",
   "publisher": "nilaykd",
-  "version": "0.134.1",
+  "version": "0.134.7",
   "engines": {
     "vscode": "^1.85.0"
   },

@@ -20,6 +20,13 @@ const payload = {
   },
   distDir: BUILD_DIR || '.next',
   swcMinify: true,
+  webpack: (config) => {
+    config.resolve.fallback = {
+      ...(config.resolve.fallback || {}),
+      process: require.resolve("process/browser"),
+    };
+    return config;
+  },
 };
 
 if (!isProd && process.env.ANALYZE) {

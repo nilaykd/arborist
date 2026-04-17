@@ -1,6 +1,7 @@
 import {
   assertUnreachable,
   DendronASTDest,
+  DendronAPI,
   DendronEditorViewKey,
   DMessageEnum,
   getWebEditorViewEntry,
@@ -9,6 +10,8 @@ import {
   NoteViewMessage,
   NoteViewMessageEnum,
   OnDidChangeActiveTextEditorMsg,
+  OnUpdatePreviewHTMLData,
+  OnUpdatePreviewHTMLMsg,
   memoize,
   DendronError,
   ConfigUtils,
@@ -429,12 +432,58 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
       }
       note = this.rewriteImageUrls(note, panel);
 
+      // Render HTML extension-side so we don't depend on the webview being
+      // able to reach the local Dendron API server over HTTP. In Codespaces
+      // the webview runs in the browser and cannot hit localhost:<port>.
+      let renderedHtml: string | undefined;
+      try {
+        const port = this._ext.port;
+        if (port) {
+          const api = new DendronAPI({
+            endpoint: `http://localhost:${port}`,
+            apiPath: "api",
+          });
+          const resp = await api.noteRender({
+            id: note.id,
+            note,
+            ws: this._ext.getDWorkspace().wsRoot,
+          });
+          if (!resp.error && resp.data) {
+            renderedHtml = resp.data;
+          } else {
+            Logger.error({
+              ctx: "PreviewPanel.sendRefreshMessage",
+              msg: `renderNote failed: ${resp.error?.message || "unknown"}`,
+            });
+          }
+        }
+      } catch (err) {
+        Logger.error({
+          ctx: "PreviewPanel.sendRefreshMessage",
+          msg: `renderNote threw: ${
+            err instanceof Error ? err.message : String(err)
+          }`,
+        });
+      }
+
       try {
         Logger.info({
           ctx: "PreviewPanel.sendRefreshMessage",
           msg: "posting to webview",
           noteFname: note.fname,
+          hasHtml: !!renderedHtml,
         });
+        if (renderedHtml) {
+          const data: OnUpdatePreviewHTMLData = {
+            note,
+            html: renderedHtml,
+          };
+          return panel.webview.postMessage({
+            type: DMessageEnum.ON_UPDATE_PREVIEW_HTML,
+            data,
+            source: "vscode",
+          } as OnUpdatePreviewHTMLMsg);
+        }
         return panel.webview.postMessage({
           type: DMessageEnum.ON_DID_CHANGE_ACTIVE_TEXT_EDITOR,
           data: {

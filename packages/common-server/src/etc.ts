@@ -292,6 +292,11 @@ export class WebViewCommonUtils {
         </div>
       </div>
 
+      <!-- Polyfills for Node globals referenced by third-party bundles -->
+      <script>
+        window.process = window.process || { env: { NODE_ENV: "production" }, platform: "browser", version: "" };
+        window.global = window.global || window;
+      </script>
       <!-- Source code for javascript bundle. Not used in browser mode-->
       <script src="${jsSrc}"></script>
     </body>
