@@ -6,7 +6,6 @@ import {
   getWebEditorViewEntry,
   isWebUri,
   NoteProps,
-  NoteUtils,
   NoteViewMessage,
   NoteViewMessageEnum,
   OnDidChangeActiveTextEditorMsg,
@@ -79,11 +78,28 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
    * Dendron note).
    */
   async show(note?: NoteProps): Promise<void> {
+    Logger.info({
+      ctx: "PreviewPanel.show",
+      hasNote: !!note,
+      noteFname: note?.fname,
+      noteId: note?.id,
+      panelExists: !!this._panel,
+      panelVisible: this.isVisible(),
+    });
+    // Cache the note so MESSAGE_DISPATCHER_READY can use it even if
+    // activeTextEditor changes while the webview is loading (e.g. on re-open)
+    if (note) {
+      this.initWithNote = note;
+    }
     if (this._panel) {
       if (!this.isVisible()) {
         this._panel.reveal();
       }
     } else {
+      Logger.info({
+        ctx: "PreviewPanel.show",
+        msg: "creating new webview panel",
+      });
       const viewColumn = vscode.ViewColumn.Beside; // Editor column to show the new webview panel in.
       const preserveFocus = true;
       const port = this._ext.port!;
@@ -129,6 +145,7 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
       this.setupCallbacks();
 
       this._panel.onDidDispose(() => {
+        Logger.info({ ctx: "PreviewPanel.onDidDispose" });
         if (this._onDidChangeActiveTextEditor) {
           this._onDidChangeActiveTextEditor.dispose();
           this._onDidChangeActiveTextEditor = undefined;
@@ -140,12 +157,19 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
         }
 
         this._panel = undefined;
+        this.initWithNote = undefined;
         this.unlock();
       });
 
       this._panel.reveal(viewColumn, preserveFocus);
     }
 
+    Logger.info({
+      ctx: "PreviewPanel.show:earlyRefresh",
+      willSend: !!note && this.isVisible(),
+      hasNote: !!note,
+      visible: this.isVisible(),
+    });
     if (note && this.isVisible()) {
       this.sendRefreshMessage(this._panel, note, true);
     }
@@ -200,7 +224,7 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
     // Callback on getting a message back from the webview
     this._panel!.webview.onDidReceiveMessage(async (msg: NoteViewMessage) => {
       const ctx = "ShowPreview:onDidReceiveMessage";
-      Logger.debug({ ctx, msgType: msg.type });
+      Logger.info({ ctx, msgType: msg.type });
       switch (msg.type) {
         case DMessageEnum.ON_DID_CHANGE_ACTIVE_TEXT_EDITOR:
         case DMessageEnum.INIT: {
@@ -212,23 +236,33 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
           let note: NoteProps | undefined;
           if (this.initWithNote !== undefined) {
             note = this.initWithNote;
-            Logger.debug({
+            // Clear after use — subsequent renders use activeTextEditor
+            this.initWithNote = undefined;
+            Logger.info({
               ctx,
-              msg: "got pre-set note",
-              note: NoteUtils.toLogObj(note),
+              branch: "MESSAGE_DISPATCHER_READY/initWithNote",
+              noteFname: note.fname,
+              noteId: note.id,
             });
           } else {
             note = await wsUtils.getActiveNote();
-            if (note) {
-              Logger.debug({
-                ctx,
-                msg: "got active note",
-                note: NoteUtils.toLogObj(note),
-              });
-            }
+            Logger.info({
+              ctx,
+              branch: "MESSAGE_DISPATCHER_READY/getActiveNote",
+              hasNote: !!note,
+              noteFname: note?.fname,
+              hasActiveEditor: !!VSCodeUtils.getActiveTextEditor(),
+              activeEditorPath:
+                VSCodeUtils.getActiveTextEditor()?.document.uri.fsPath,
+            });
           }
           if (note) {
             this.sendRefreshMessage(this._panel!, note, true);
+          } else {
+            Logger.warn({
+              ctx,
+              msg: "NO NOTE — webview will remain blank",
+            });
           }
           break;
         }
@@ -374,6 +408,13 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
     note: NoteProps,
     isFullRefresh: boolean
   ) {
+    Logger.info({
+      ctx: "PreviewPanel.sendRefreshMessage",
+      noteFname: note.fname,
+      noteId: note.id,
+      isFullRefresh,
+      visible: this.isVisible(),
+    });
     if (this.isVisible()) {
       // Engine state has not changed so do not sync. This is for displaying updated text only
       const syncChangedNote = false;
@@ -389,6 +430,11 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
       note = this.rewriteImageUrls(note, panel);
 
       try {
+        Logger.info({
+          ctx: "PreviewPanel.sendRefreshMessage",
+          msg: "posting to webview",
+          noteFname: note.fname,
+        });
         return panel.webview.postMessage({
           type: DMessageEnum.ON_DID_CHANGE_ACTIVE_TEXT_EDITOR,
           data: {
@@ -398,12 +444,19 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
           source: "vscode",
         } as OnDidChangeActiveTextEditorMsg);
       } catch (err) {
-        Logger.info({
-          ctx: "sendRefreshMessage",
-          state: "webview is disposed",
+        Logger.error({
+          ctx: "PreviewPanel.sendRefreshMessage",
+          msg: `webview post failed: ${
+            err instanceof Error ? err.message : String(err)
+          }`,
         });
         return;
       }
+    } else {
+      Logger.warn({
+        ctx: "PreviewPanel.sendRefreshMessage",
+        msg: "panel not visible — skipping refresh",
+      });
     }
 
     return;

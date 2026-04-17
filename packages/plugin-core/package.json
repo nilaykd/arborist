@@ -1,10 +1,10 @@
 {
   "name": "@dendronhq/plugin-core",
   "private": true,
-  "displayName": "Arborist Notes",
-  "description": "Arborist — a hierarchical note-taking tool that grows as you do. Community fork of Dendron.",
+  "displayName": "Arborist",
+  "description": "Maintained fork of the Dendron hierarchical notes extension, modernized for current VS Code and Node versions. Same on-disk format as Dendron; zero critical CVEs in dependencies. Independent maintenance \u2014 not affiliated with the original Dendron project.",
   "publisher": "nilaykd",
-  "version": "0.133.3",
+  "version": "0.134.0",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -15,11 +15,15 @@
     "hoistingLimits": "none"
   },
   "keywords": [
-    "second brain",
-    "markdown",
-    "roam",
-    "notes",
-    "schema"
+    "arborist",
+    "arborist notes",
+    "hierarchical notes",
+    "markdown notes",
+    "note taking",
+    "pkm",
+    "knowledge management",
+    "dendron fork",
+    "dendron maintained"
   ],
   "activationEvents": [
     "*"
@@ -49,19 +53,19 @@
       },
       {
         "view": "dendron.recent-workspaces",
-        "contents": "No recent workspaces detected. If this is your first time using Dendron, [try out our tutorial workspace](command:dendron.launchTutorialWorkspace?%7B%22invocationPoint%22%3A%22RecentWorkspacesPanel%22%7D)."
+        "contents": "No recent workspaces detected. If this is your first time using Arborist, [try out our tutorial workspace](command:dendron.launchTutorialWorkspace?%7B%22invocationPoint%22%3A%22RecentWorkspacesPanel%22%7D)."
       },
       {
         "view": "dendron.treeView",
-        "contents": "First open a Dendron note to see the tree view."
+        "contents": "First open a Arborist note to see the tree view."
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
           "id": "dendron-view",
-          "title": "Dendron",
-          "icon": "media/icons/dendron-activity-bar-icon.svg"
+          "title": "Arborist",
+          "icon": "media/icons/arborist-activity-bar-icon.svg"
         }
       ]
     },
@@ -90,7 +94,7 @@
           "id": "dendron.treeView",
           "name": "Tree View",
           "when": "dendron:pluginActive",
-          "icon": "media/icons/dendron-vscode.svg"
+          "icon": "media/icons/arborist-vscode.svg"
         },
         {
           "id": "dendron.lookup-view",
@@ -106,7 +110,7 @@
         },
         {
           "id": "dendron.recent-workspaces",
-          "name": "Recent Dendron Workspaces",
+          "name": "Recent Arborist Workspaces",
           "when": "!dendron:pluginActive && shellExecutionSupported"
         },
         {
@@ -132,7 +136,7 @@
       },
       {
         "command": "dendron.backlinks.sortByLastUpdatedChecked",
-        "title": "✓ Sort by Last Updated"
+        "title": "\u2713 Sort by Last Updated"
       },
       {
         "command": "dendron.backlinks.sortByPathNames",
@@ -140,7 +144,7 @@
       },
       {
         "command": "dendron.backlinks.sortByPathNamesChecked",
-        "title": "✓ Sort by Path Names"
+        "title": "\u2713 Sort by Path Names"
       },
       {
         "command": "dendron.backlinks.expandAll",
@@ -169,7 +173,7 @@
       },
       {
         "command": "dendron.treeView.expandStub",
-        "title": "Dendron: Dev: Expand Stub"
+        "title": "Arborist: Dev: Expand Stub"
       },
       {
         "command": "dendron.treeView.gotoNote",
@@ -200,436 +204,436 @@
       },
       {
         "command": "dendron.graph-panel.showBacklinksChecked",
-        "title": "✓ Show Backlinks"
+        "title": "\u2713 Show Backlinks"
       },
       {
         "command": "dendron.graph-panel.showOutwardLinksChecked",
-        "title": "✓ Show Outward Links"
+        "title": "\u2713 Show Outward Links"
       },
       {
         "command": "dendron.graph-panel.showHierarchyChecked",
-        "title": "✓ Show Hierarchy"
+        "title": "\u2713 Show Hierarchy"
       },
       {
         "command": "dendron.browseNote",
-        "title": "Dendron: Browse Note"
+        "title": "Arborist: Browse Note"
       },
       {
         "command": "dendron.contributeToCause",
-        "title": "Dendron: Contribute "
+        "title": "Arborist: Contribute "
       },
       {
         "command": "dendron.goto",
-        "title": "Dendron: Go to"
+        "title": "Arborist: Go to"
       },
       {
         "command": "dendron.gotoNote",
-        "title": "Dendron: Go to Note"
+        "title": "Arborist: Go to Note"
       },
       {
         "command": "dendron.createSchemaFromHierarchy",
-        "title": "Dendron: Create Schema From Note Hierarchy"
+        "title": "Arborist: Create Schema From Note Hierarchy"
       },
       {
         "command": "dendron.createDailyJournalNote",
-        "title": "Dendron: Create Daily Journal Note"
+        "title": "Arborist: Create Daily Journal Note"
       },
       {
         "command": "dendron.copyNoteLink",
-        "title": "Dendron: Copy Note Link"
+        "title": "Arborist: Copy Note Link"
       },
       {
         "command": "dendron.copyNoteRef",
-        "title": "Dendron: Copy Note Ref"
+        "title": "Arborist: Copy Note Ref"
       },
       {
         "command": "dendron.copyToClipboard",
-        "title": "Dendron: Copy To Clipboard"
+        "title": "Arborist: Copy To Clipboard"
       },
       {
         "command": "dendron.copyCodespaceURL",
-        "title": "Dendron: Copy Codespace URL"
+        "title": "Arborist: Copy Codespace URL"
       },
       {
         "command": "dendron.copyAs",
-        "title": "Dendron: Copy As"
+        "title": "Arborist: Copy As"
       },
       {
         "command": "dendron.delete",
-        "title": "Dendron: Delete"
+        "title": "Arborist: Delete"
       },
       {
         "command": "dendron.insertNoteLink",
-        "title": "Dendron: Insert Note Link"
+        "title": "Arborist: Insert Note Link"
       },
       {
         "command": "dendron.insertNoteIndex",
-        "title": "Dendron: Insert Note Index"
+        "title": "Arborist: Insert Note Index"
       },
       {
         "command": "dendron.moveNote",
-        "title": "Dendron: Move Note"
+        "title": "Arborist: Move Note"
       },
       {
         "command": "dendron.moveSelectionTo",
-        "title": "Dendron: Move Selection To"
+        "title": "Arborist: Move Selection To"
       },
       {
         "command": "dendron.mergeNote",
-        "title": "Dendron: Merge Note"
+        "title": "Arborist: Merge Note"
       },
       {
         "command": "dendron.randomNote",
-        "title": "Dendron: Random Note"
+        "title": "Arborist: Random Note"
       },
       {
         "command": "dendron.renameNoteV2a",
-        "title": "Dendron: Rename Note V2a"
+        "title": "Arborist: Rename Note V2a"
       },
       {
         "command": "dendron.renameNote",
-        "title": "Dendron: Rename Note"
+        "title": "Arborist: Rename Note"
       },
       {
         "command": "dendron.renameHeader",
-        "title": "Dendron: Rename Header"
+        "title": "Arborist: Rename Header"
       },
       {
         "command": "dendron.moveHeader",
-        "title": "Dendron: Move Header"
+        "title": "Arborist: Move Header"
       },
       {
         "command": "dendron.convertCandidateLink",
-        "title": "Dendron: Convert Candidate Link"
+        "title": "Arborist: Convert Candidate Link"
       },
       {
         "command": "dendron.convertLink",
-        "title": "Dendron: Convert Link"
+        "title": "Arborist: Convert Link"
       },
       {
         "command": "dendron.lookupNote",
-        "title": "Dendron: Lookup Note"
+        "title": "Arborist: Lookup Note"
       },
       {
         "command": "dendron.lookupNoteAutoComplete",
-        "title": "Dendron: hidden"
+        "title": "Arborist: hidden"
       },
       {
         "command": "dendron.createJournalNote",
-        "title": "Dendron: Create Journal Note"
+        "title": "Arborist: Create Journal Note"
       },
       {
         "command": "dendron.createScratchNote",
-        "title": "Dendron: Create Scratch Note"
+        "title": "Arborist: Create Scratch Note"
       },
       {
         "command": "dendron.createNote",
-        "title": "Dendron: Create Note"
+        "title": "Arborist: Create Note"
       },
       {
         "command": "dendron.createMeetingNote",
-        "title": "Dendron: Create Meeting Note"
+        "title": "Arborist: Create Meeting Note"
       },
       {
         "command": "dendron.lookupSchema",
-        "title": "Dendron: Lookup Schema"
+        "title": "Arborist: Lookup Schema"
       },
       {
         "command": "dendron.reloadIndex",
-        "title": "Dendron: Reload Index"
+        "title": "Arborist: Reload Index"
       },
       {
         "command": "dendron.createTask",
-        "title": "Dendron: Create Task Note"
+        "title": "Arborist: Create Task Note"
       },
       {
         "command": "dendron.setTaskStatus",
-        "title": "Dendron: Set Task Status"
+        "title": "Arborist: Set Task Status"
       },
       {
         "command": "dendron.completeTask",
-        "title": "Dendron: Complete Task"
+        "title": "Arborist: Complete Task"
       },
       {
         "command": "dendron.applyTemplate",
-        "title": "Dendron: Apply Template"
+        "title": "Arborist: Apply Template"
       },
       {
         "command": "dendron.archiveHierarchy",
-        "title": "Dendron: Archive Hierarchy"
+        "title": "Arborist: Archive Hierarchy"
       },
       {
         "command": "dendron.refactorHierarchy",
-        "title": "Dendron: Refactor Hierarchy"
+        "title": "Arborist: Refactor Hierarchy"
       },
       {
         "command": "dendron.goUpHierarchy",
-        "title": "Dendron: Go Up"
+        "title": "Arborist: Go Up"
       },
       {
         "command": "dendron.goNextHierarchy",
-        "title": "Dendron: Go Next Sibling"
+        "title": "Arborist: Go Next Sibling"
       },
       {
         "command": "dendron.goPrevHierarchy",
-        "title": "Dendron: Go Previous Sibling"
+        "title": "Arborist: Go Previous Sibling"
       },
       {
         "command": "dendron.goDownHierarchy",
-        "title": "Dendron: Go Down"
+        "title": "Arborist: Go Down"
       },
       {
         "command": "dendron.gotoBacklink",
-        "title": "Dendron: Go To Backlink"
+        "title": "Arborist: Go To Backlink"
       },
       {
         "command": "dendron.addAndCommit",
-        "title": "Dendron: Workspace: Add and Commit"
+        "title": "Arborist: Workspace: Add and Commit"
       },
       {
         "command": "dendron.sync",
-        "title": "Dendron: Workspace: Sync"
+        "title": "Arborist: Workspace: Sync"
       },
       {
         "command": "dendron.vaultAdd",
-        "title": "Dendron: Vault Add"
+        "title": "Arborist: Vault Add"
       },
       {
         "command": "dendron.removeVault",
-        "title": "Dendron: Remove Vault"
+        "title": "Arborist: Remove Vault"
       },
       {
         "command": "dendron.convertVault",
-        "title": "Dendron: Convert Vault"
+        "title": "Arborist: Convert Vault"
       },
       {
         "command": "dendron.createNewVault",
-        "title": "Dendron: Create New Vault"
+        "title": "Arborist: Create New Vault"
       },
       {
         "command": "dendron.addExistingVault",
-        "title": "Dendron: Add Existing Vault"
+        "title": "Arborist: Add Existing Vault"
       },
       {
         "command": "dendron.initWS",
-        "title": "Dendron: Initialize Workspace"
+        "title": "Arborist: Initialize Workspace"
       },
       {
         "command": "dendron.changeWS",
-        "title": "Dendron: Change Workspace"
+        "title": "Arborist: Change Workspace"
       },
       {
         "command": "dendron.upgradeSettings",
-        "title": "Dendron: Upgrade Settings"
+        "title": "Arborist: Upgrade Settings"
       },
       {
         "command": "dendron.configurePod",
-        "title": "Dendron: Configure Pod"
+        "title": "Arborist: Configure Pod"
       },
       {
         "command": "dendron.configureServiceConnection",
-        "title": "Dendron: Configure Service Connection",
+        "title": "Arborist: Configure Service Connection",
         "enablement": "dendron:pluginActive && dendron:enableExportPodV2"
       },
       {
         "command": "dendron.configureExportPodV2",
-        "title": "Dendron: Configure Export Pod V2",
+        "title": "Arborist: Configure Export Pod V2",
         "enablement": "dendron:pluginActive && dendron:enableExportPodV2"
       },
       {
         "command": "dendron.importPod",
-        "title": "Dendron: Import Pod"
+        "title": "Arborist: Import Pod"
       },
       {
         "command": "dendron.importObsidianPod",
-        "title": "Dendron: Import Obsidian Vault"
+        "title": "Arborist: Import Obsidian Vault"
       },
       {
         "command": "dendron.exportPod",
-        "title": "Dendron: Export Pod"
+        "title": "Arborist: Export Pod"
       },
       {
         "command": "dendron.exportPodv2",
-        "title": "Dendron: Export Pod V2",
+        "title": "Arborist: Export Pod V2",
         "enablement": "dendron:pluginActive && dendron:enableExportPodV2"
       },
       {
         "command": "dendron.publishPod",
-        "title": "Dendron: Publish Pod"
+        "title": "Arborist: Publish Pod"
       },
       {
         "command": "dendron.snapshotVault",
-        "title": "Dendron: Snapshot Vault"
+        "title": "Arborist: Snapshot Vault"
       },
       {
         "command": "dendron.restoreVault",
-        "title": "Dendron: Restore Vault"
+        "title": "Arborist: Restore Vault"
       },
       {
         "command": "dendron.copyNoteURL",
-        "title": "Dendron: Copy Note URL"
+        "title": "Arborist: Copy Note URL"
       },
       {
         "command": "dendron.createHook",
-        "title": "Dendron: Hook Create"
+        "title": "Arborist: Hook Create"
       },
       {
         "command": "dendron.deleteHook",
-        "title": "Dendron: Hook Delete"
+        "title": "Arborist: Hook Delete"
       },
       {
         "command": "dendron.registerNoteTrait",
-        "title": "Dendron: Register Note Trait"
+        "title": "Arborist: Register Note Trait"
       },
       {
         "command": "dendron.configureNoteTraits",
-        "title": "Dendron: Configure Note Traits"
+        "title": "Arborist: Configure Note Traits"
       },
       {
         "command": "dendron.createNoteWithTraits",
-        "title": "Dendron: Create Note with Custom Traits"
+        "title": "Arborist: Create Note with Custom Traits"
       },
       {
         "command": "dendron.publishExport",
-        "title": "Dendron: Publish Export"
+        "title": "Arborist: Publish Export"
       },
       {
         "command": "dendron.publishDev",
-        "title": "Dendron: Publish Dev"
+        "title": "Arborist: Publish Dev"
       },
       {
         "command": "dendron.signUp",
-        "title": "Dendron: Sign Up"
+        "title": "Arborist: Sign Up"
       },
       {
         "command": "dendron.signIn",
-        "title": "Dendron: Sign In"
+        "title": "Arborist: Sign In"
       },
       {
         "command": "dendron.enableTelemetry",
-        "title": "Dendron: Enable Telemetry"
+        "title": "Arborist: Enable Telemetry"
       },
       {
         "command": "dendron.disableTelemetry",
-        "title": "Dendron: Disable Telemetry"
+        "title": "Arborist: Disable Telemetry"
       },
       {
         "command": "dendron.openLink",
-        "title": "Dendron: Open Link"
+        "title": "Arborist: Open Link"
       },
       {
         "command": "dendron.pasteLink",
-        "title": "Dendron: Paste Link"
+        "title": "Arborist: Paste Link"
       },
       {
         "command": "dendron.showHelp",
-        "title": "Dendron: Show Help"
+        "title": "Arborist: Show Help"
       },
       {
         "command": "dendron.showNoteGraphView",
-        "title": "Dendron: Show Note Graph"
+        "title": "Arborist: Show Note Graph"
       },
       {
         "command": "dendron.showSchemaGraphView",
-        "title": "Dendron: Show Schema Graph"
+        "title": "Arborist: Show Schema Graph"
       },
       {
         "command": "dendron.showLegacyPreview",
-        "title": "Dendron: Show Preview (legacy)"
+        "title": "Arborist: Show Preview (legacy)"
       },
       {
         "command": "dendron.togglePreview",
-        "title": "Dendron: Toggle Preview",
+        "title": "Arborist: Toggle Preview",
         "icon": "$(open-preview)"
       },
       {
         "command": "dendron.togglePreviewLock",
-        "title": "Dendron: Toggle Preview Lock",
+        "title": "Arborist: Toggle Preview Lock",
         "icon": "$(lock)"
       },
       {
         "command": "dendron.pasteFile",
-        "title": "Dendron: Paste File"
+        "title": "Arborist: Paste File"
       },
       {
         "command": "dendron.configureRaw",
-        "title": "Dendron: Configure (yaml)"
+        "title": "Arborist: Configure (yaml)"
       },
       {
         "command": "dendron.configureUI",
-        "title": "Dendron: Configure (UI)"
+        "title": "Arborist: Configure (UI)"
       },
       {
         "command": "dendron.configureGraphStyle",
-        "title": "Dendron: Configure Graph Style (css)"
+        "title": "Arborist: Configure Graph Style (css)"
       },
       {
         "command": "dendron.configureLocalOverride",
-        "title": "Dendron: Configure Local Override"
+        "title": "Arborist: Configure Local Override"
       },
       {
         "command": "dendron.seedAdd",
-        "title": "Dendron: Add Seed to Workspace"
+        "title": "Arborist: Add Seed to Workspace"
       },
       {
         "command": "dendron.seedRemove",
-        "title": "Dendron: Remove Seed from Workspace"
+        "title": "Arborist: Remove Seed from Workspace"
       },
       {
         "command": "dendron.seedBrowse",
-        "title": "Dendron: Browse the Seed Registry"
+        "title": "Arborist: Browse the Seed Registry"
       },
       {
         "command": "dendron.dev.doctor",
-        "title": "Dendron: Doctor"
+        "title": "Arborist: Doctor"
       },
       {
         "command": "dendron.dev.dumpState",
-        "title": "Dendron: Dump State"
+        "title": "Arborist: Dump State"
       },
       {
         "command": "dendron.dev.devTrigger",
-        "title": "Dendron:Dev: Dev Trigger"
+        "title": "Arborist:Dev: Dev Trigger"
       },
       {
         "command": "dendron.dev.resetConfig",
-        "title": "Dendron:Dev: Reset Config"
+        "title": "Arborist:Dev: Reset Config"
       },
       {
         "command": "dendron.dev.runMigration",
-        "title": "Dendron:Dev: Run Migration"
+        "title": "Arborist:Dev: Run Migration"
       },
       {
         "command": "dendron.dev.migrateSelfContained",
-        "title": "Dendron: Migrate to Self Contained Vault"
+        "title": "Arborist: Migrate to Self Contained Vault"
       },
       {
         "command": "dendron.dev.openLogs",
-        "title": "Dendron:Dev: Open Logs"
+        "title": "Arborist:Dev: Open Logs"
       },
       {
         "command": "dendron.diagnosticsReport",
-        "title": "Dendron:Dev: Diagnostics Report"
+        "title": "Arborist:Dev: Diagnostics Report"
       },
       {
         "command": "dendron.showWelcomePage",
-        "title": "Dendron: Launch Tutorial"
+        "title": "Arborist: Launch Tutorial"
       },
       {
         "command": "dendron.launchTutorialWorkspace",
-        "title": "Dendron: Launch Tutorial Workspace"
+        "title": "Arborist: Launch Tutorial Workspace"
       },
       {
         "command": "dendron.openBackup",
-        "title": "Dendron: Open Backup"
+        "title": "Arborist: Open Backup"
       },
       {
         "command": "dendron.instrumentedWrapperCommand",
-        "title": "Dendron: Instrumented Wrapper Command"
+        "title": "Arborist: Instrumented Wrapper Command"
       },
       {
         "command": "dendron.dev.validateEngine",
-        "title": "Dendron:Dev: Validate Engine"
+        "title": "Arborist:Dev: Validate Engine"
       }
     ],
     "menus": {
@@ -1467,7 +1471,7 @@
       }
     ]
   },
-  "icon": "media/logo.png",
+  "icon": "media/arborist-logo.png",
   "binary": {
     "module_name": "node_sqlite3",
     "module_path": "./lib/binding/napi-v{napi_build_version}-{platform}-{libc}-{arch}",

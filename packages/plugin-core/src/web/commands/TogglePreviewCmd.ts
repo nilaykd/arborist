@@ -42,6 +42,13 @@ export class TogglePreviewCmd {
     }
 
     const note = await this.wsUtils.getActiveNote();
+    // eslint-disable-next-line no-console
+    console.log("[Arborist TogglePreview] run()", {
+      hasNote: !!note,
+      noteFname: note?.fname,
+      hasActiveEditor: !!vscode.window.activeTextEditor,
+      activeEditorPath: vscode.window.activeTextEditor?.document.uri.fsPath,
+    });
 
     // Pass note directly — show() handles panel creation and caches note
     // for use when the webview becomes ready

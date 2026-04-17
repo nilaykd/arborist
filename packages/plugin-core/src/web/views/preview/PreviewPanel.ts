@@ -67,6 +67,13 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
    * Dendron note).
    */
   async show(note?: NoteProps): Promise<void> {
+    // eslint-disable-next-line no-console
+    console.log("[Arborist Preview] show() called", {
+      hasNote: !!note,
+      noteId: note?.id,
+      noteFname: note?.fname,
+      panelExists: !!this._panel,
+    });
     // Cache the note so MESSAGE_DISPATCHER_READY can use it even if
     // activeTextEditor changes (e.g. when closing the preview tab)
     if (note) {
@@ -195,6 +202,11 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
           break;
         }
         case DMessageEnum.MESSAGE_DISPATCHER_READY: {
+          // eslint-disable-next-line no-console
+          console.log("[Arborist Preview] MESSAGE_DISPATCHER_READY fired", {
+            hasInitWithNote: this.initWithNote !== undefined,
+            initWithNoteFname: this.initWithNote?.fname,
+          });
           // if ready, get current note
           let note: NoteProps | undefined;
           if (this.initWithNote !== undefined) {
@@ -208,6 +220,14 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
             });
           } else {
             note = await this.wsUtils.getActiveNote();
+            // eslint-disable-next-line no-console
+            console.log("[Arborist Preview] getActiveNote result", {
+              hasNote: !!note,
+              noteFname: note?.fname,
+              activeEditor: !!vscode.window.activeTextEditor,
+              activeEditorPath:
+                vscode.window.activeTextEditor?.document.uri.fsPath,
+            });
             if (note) {
               this.logger.debug({
                 ctx,
@@ -217,7 +237,17 @@ export class PreviewPanel implements PreviewProxy, vscode.Disposable {
             }
           }
           if (note) {
+            // eslint-disable-next-line no-console
+            console.log(
+              "[Arborist Preview] sending refresh with note",
+              note.fname
+            );
             this.sendRefreshMessage(this._panel!, note, true);
+          } else {
+            // eslint-disable-next-line no-console
+            console.warn(
+              "[Arborist Preview] NO NOTE — webview will remain blank"
+            );
           }
           break;
         }

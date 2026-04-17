@@ -5,6 +5,7 @@ import * as path from "path";
 import { PreviewProxy } from "../components/views/PreviewProxy";
 import { DENDRON_COMMANDS } from "../constants";
 import { ExtensionProvider } from "../ExtensionProvider";
+import { Logger } from "../logger";
 import { VSCodeUtils } from "../vsCodeUtils";
 import { InputArgCommand } from "./base";
 import {
@@ -54,10 +55,40 @@ export class TogglePreviewCommand extends InputArgCommand<
    * behavior of showing the contents of the currently in-focus Dendron note.
    */
   async execute(opts?: TogglePreviewCommandOpts) {
+    try {
+      return await this._executeInner(opts);
+    } catch (err) {
+      Logger.error({
+        ctx: "TogglePreview.execute",
+        msg: `CRASH: ${
+          err instanceof Error
+            ? `${err.name}: ${err.message}\n${err.stack}`
+            : String(err)
+        }`,
+      });
+      throw err;
+    }
+  }
+
+  private async _executeInner(opts?: TogglePreviewCommandOpts) {
     let note: NoteProps | undefined;
+    const editor = VSCodeUtils.getActiveTextEditor();
+    Logger.info({
+      ctx: "TogglePreview.execute",
+      hasOpts: !!opts && !_.isEmpty(opts),
+      optsFsPath: opts?.fsPath,
+      panelVisible: this._panel.isVisible(),
+      panelOpen: this._panel.isOpen(),
+      hasActiveEditor: !!editor,
+      activeEditorPath: editor?.document.uri.fsPath,
+    });
 
     // Hide (dispose) the previwe panel when it's already visible
     if (this._panel.isVisible()) {
+      Logger.info({
+        ctx: "TogglePreview.execute",
+        msg: "hiding visible panel",
+      });
       this._panel.hide();
       return undefined;
     }
@@ -69,10 +100,19 @@ export class TogglePreviewCommand extends InputArgCommand<
       // Used the command bar or keyboard shortcut to open preview for active note
       note = await ExtensionProvider.getWSUtils().getActiveNote();
     }
-    await this._panel.show();
+    Logger.info({
+      ctx: "TogglePreview.execute",
+      msg: "resolved note",
+      hasNote: !!note,
+      noteFname: note?.fname,
+      noteId: note?.id,
+    });
+
+    // Pass note directly — show() handles panel creation and caches note
+    // for use when the webview becomes ready (fixes blank preview on re-open)
+    await this._panel.show(note);
 
     if (note) {
-      await this._panel.show(note);
       return { note };
     } else if (opts?.fsPath) {
       const fsPath = opts.fsPath;
